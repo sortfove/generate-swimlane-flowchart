@@ -19,14 +19,14 @@
 
 ## 图1
 
-![flow.drawio](D:\software\typora\pictures\flow.drawio-1785091852822-1.png)
+![](./Image/flow.drawio-1785091852822-1.png)
 
 ## 图2
 
-![知识库问答流程](D:\software\typora\pictures\知识库问答流程.png)
+![](./Image/flow.drawio.png)
 
 ## 图3 
 
 ## 图中部分线重合和出现穿透行为，这个可以暂时需要人为去调整
 
-![flow.drawio (2)](D:\software\typora\pictures\flow.drawio (2).png)
+![流程图](./Image/flow.drawio (2).png)
