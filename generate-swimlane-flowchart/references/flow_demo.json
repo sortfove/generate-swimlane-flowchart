@@ -1,0 +1,267 @@
+{
+  "lanes":[
+    {
+      "id":"user",
+      "name":"员工"
+    },
+    {
+      "id":"system",
+      "name":"业务系统"
+    },
+    {
+      "id":"approval",
+      "name":"审批部门"
+    },
+    {
+      "id":"database",
+      "name":"数据层"
+    },
+    {
+      "id":"external",
+      "name":"外部系统"
+    }
+  ],
+
+
+  "nodes":[
+
+    {
+      "id":"start",
+      "text":"开始",
+      "lane":"user",
+      "type":"start"
+    },
+
+
+    {
+      "id":"input",
+      "text":"输入报销信息",
+      "lane":"user",
+      "type":"input"
+    },
+
+
+    {
+      "id":"create_request",
+      "text":"创建报销申请",
+      "lane":"system",
+      "type":"process"
+    },
+
+
+    {
+      "id":"generate_document",
+      "text":"生成报销申请单",
+      "lane":"system",
+      "type":"document"
+    },
+
+
+    {
+      "id":"save_record",
+      "text":"保存报销数据",
+      "lane":"database",
+      "type":"database"
+    },
+
+
+    {
+      "id":"submit_request",
+      "text":"提交报销申请",
+      "lane":"system",
+      "type":"process"
+    },
+
+
+    {
+      "id":"check_amount",
+      "text":"是否超过审批额度",
+      "lane":"approval",
+      "type":"decision"
+    },
+
+
+    {
+      "id":"manual_review",
+      "text":"人工审核报销单",
+      "lane":"approval",
+      "type":"human"
+    },
+
+
+    {
+      "id":"approve_request",
+      "text":"审批报销申请",
+      "lane":"approval",
+      "type":"process"
+    },
+
+
+    {
+      "id":"reject_request",
+      "text":"驳回报销申请",
+      "lane":"approval",
+      "type":"process"
+    },
+
+
+    {
+      "id":"execute_payment",
+      "text":"执行付款流程",
+      "lane":"external",
+      "type":"subprocess"
+    },
+
+
+    {
+      "id":"payment_api",
+      "text":"调用支付接口",
+      "lane":"external",
+      "type":"api"
+    },
+
+
+    {
+      "id":"update_status",
+      "text":"更新报销状态",
+      "lane":"database",
+      "type":"process"
+    },
+
+
+    {
+      "id":"result_document",
+      "text":"生成审批结果单",
+      "lane":"system",
+      "type":"document"
+    },
+
+
+    {
+      "id":"output_success",
+      "text":"输出审批结果",
+      "lane":"user",
+      "type":"output"
+    },
+
+
+    {
+      "id":"end",
+      "text":"结束",
+      "lane":"user",
+      "type":"end"
+    }
+
+  ],
+
+
+  "edges":[
+
+
+    {
+      "source":"start",
+      "target":"input"
+    },
+
+
+    {
+      "source":"input",
+      "target":"create_request"
+    },
+
+
+    {
+      "source":"create_request",
+      "target":"generate_document"
+    },
+
+
+    {
+      "source":"generate_document",
+      "target":"save_record"
+    },
+
+
+    {
+      "source":"save_record",
+      "target":"submit_request"
+    },
+
+
+    {
+      "source":"submit_request",
+      "target":"check_amount"
+    },
+
+
+    {
+      "source":"check_amount",
+      "target":"manual_review",
+      "label":"是"
+    },
+
+
+    {
+      "source":"check_amount",
+      "target":"approve_request",
+      "label":"否"
+    },
+
+
+    {
+      "source":"manual_review",
+      "target":"approve_request"
+    },
+
+
+    {
+      "source":"approve_request",
+      "target":"execute_payment"
+    },
+
+
+    {
+      "source":"execute_payment",
+      "target":"payment_api"
+    },
+
+
+    {
+      "source":"payment_api",
+      "target":"update_status"
+    },
+
+
+    {
+      "source":"update_status",
+      "target":"result_document"
+    },
+
+
+    {
+      "source":"result_document",
+      "target":"output_success"
+    },
+
+
+    {
+      "source":"approve_request",
+      "target":"reject_request",
+      "label":"驳回"
+    },
+
+
+    {
+      "source":"reject_request",
+      "target":"output_success"
+    },
+
+
+    {
+      "source":"output_success",
+      "target":"end"
+    }
+
+  ]
+
+}
